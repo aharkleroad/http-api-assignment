@@ -1,0 +1,25 @@
+{
+  "name": "http-api-assignment",
+  "version": "1.0.0",
+  "description": "HTTP API Assignment for Web App Dev II",
+  "homepage": "https://github.com/aharkleroad/http-api-assignment#readme",
+  "bugs": {
+    "url": "https://github.com/aharkleroad/http-api-assignment/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aharkleroad/http-api-assignment.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Aizlynn Harkleroad",
+  "type": "commonjs",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "echo \"Tests complete\"",
+    "pretest": "eslint ./src --fix",
+    "start": "node ./src/server.js"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.2"
+  }
+}

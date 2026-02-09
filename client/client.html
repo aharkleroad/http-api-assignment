@@ -3,8 +3,80 @@
 <head>
   <title>Our simple HTTP server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
+
   <script>
+    // displays contents of fetch requests made on the index page
+    const handleResponse = async (response) => {
+      const pageContent = document.querySelector('#content');
+
+      switch (response.status) {
+        case 200:
+          pageContent.innerHTML = `<b>Success</b>`;
+          break;
+        case 400:
+          pageContent.innerHTML = `<b>Bad Request</b>`;
+          break;
+        case 401:
+          pageContent.innerHTML = `<b>Unauthorized</b>`;
+          break;
+        case 403:
+          pageContent.innerHTML = `<b>Forbidden</b>`;
+          break;
+        case 404:
+          pageContent.innerHTML = `<b>Resource Not Found</b>`;
+          break;
+        case 500:
+          pageContent.innerHTML = `<b>Internal Server Error</b>`;
+          break;
+        case 501:
+          pageContent.innerHTML = `<b>Not Implemented</b>`;
+          break;
+        default:
+          pageContent.innerHTML = `<b>Unknown Error Code</b>`;
+          break;
+      }
+
+      // handles xml
+      if (response.headers.get("content-type") === 'text/xml'){
+        // get text
+        const responseText = await response.text();
+        console.log(responseText);
+
+        // parse text
+        let parsedXML = new window.DOMParser().parseFromString(responseText, 'text/xml');
+        let messageParagraph = pageContent.appendChild(document.createElement('p'));
+        messageParagraph.innerText = `Message: ${parsedXML.querySelector('message').textContent}`;
+        return;
+      }
+      // handles json
+      // get json
+      const responseText = await response.json();
+      console.log(responseText);
+
+      //parse json
+      if (responseText.message) {
+        pageContent.innerHTML += `<p>Message: ${responseText.message}</p>`;
+      }
+    }
+
+    // sends a fetch request to the appropriate page and with the selected accept type
+    const sendRequest = async () => {
+      const page = document.querySelector("#page").value;
+      const type = document.querySelector("#type").value;
+
+      const response = await fetch(page, {
+        headers: {'Accept': type}
+      });
+      handleResponse(response);
+    }
+
+    // hooks up sendbutton
+    const init = () => {
+      const sendButton = document.querySelector("#send");
+      sendButton.addEventListener('click', sendRequest);
+    }
+
+    window.onload = init;
 
   </script>
 </head>

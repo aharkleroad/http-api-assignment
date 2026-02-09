@@ -13,7 +13,7 @@ const respond = (request, response, status, content, type, message) => {
     response.end();
 }
 
-// calls respond depending on what url is requested
+// calls respond with different parameters depending on what url & response type is requested
 const getIndex = (request, response) => {
     respond(request, response, 200, index, 'text/html', "");
 }
@@ -28,13 +28,11 @@ const getSuccess = (request, response) => {
     if (request.acceptedTypes) {
         if (request.acceptedTypes[0] === 'text/xml') {
             const responseXML = `<response><message>${message}</message></response>`;
-            console.log(responseXML);
-            respond(request, response, 200, responseXML, 'text/xml', responseXML);
+            return respond(request, response, 200, responseXML, 'text/xml', responseXML);
         }
     }
     // handle json
     const responseJSON = JSON.stringify({ message });
-    console.log(responseJSON);
     respond(request, response, 200, responseJSON, 'application/json', responseJSON);
 }
 
@@ -60,8 +58,7 @@ const getBadRequest = (request, response) => {
             else {
                 responseText = `<response><message>${message}</message></response>`;
             }
-            console.log(responseText);
-            respond(request, response, status, responseText, 'text/xml', responseText);
+            return respond(request, response, status, responseText, 'text/xml', responseText);
         }
     }
     // handle json
@@ -71,7 +68,6 @@ const getBadRequest = (request, response) => {
     else {
         responseText = JSON.stringify({ message });
     }
-    console.log(responseText);
     respond(request, response, status, responseText, 'application/json', responseText);
 }
 
@@ -97,8 +93,7 @@ const getUnauthorized = (request, response) => {
             else {
                 responseText = `<response><message>${message}</message></response>`;
             }
-            console.log(responseText);
-            respond(request, response, status, responseText, 'text/xml', responseText);
+            return respond(request, response, status, responseText, 'text/xml', responseText);
         }
     }
     // handle json
@@ -108,7 +103,6 @@ const getUnauthorized = (request, response) => {
     else {
         responseText = JSON.stringify({ message });
     }
-    console.log(responseText);
     respond(request, response, status, responseText, 'application/json', responseText);
 }
 
@@ -119,13 +113,11 @@ const getForbidden = (request, response) => {
     if (request.acceptedTypes) {
         if (request.acceptedTypes[0] === 'text/xml') {
             const responseXML = `<response><message>${message}</message><id>${id}</id></response>`;
-            console.log(responseXML);
-            respond(request, response, 403, responseXML, 'text/xml', responseXML);
+            return respond(request, response, 403, responseXML, 'text/xml', responseXML);
         }
     }
     // handle json
     const responseJSON = JSON.stringify({ message, id });
-    console.log(responseJSON);
     respond(request, response, 403, responseJSON, 'application/json', responseJSON);
 }
 
@@ -136,13 +128,11 @@ const getInternal = (request, response) => {
     if (request.acceptedTypes) {
         if (request.acceptedTypes[0] === 'text/xml') {
             const responseXML = `<response><message>${message}</message><id>${id}</id></response>`;
-            console.log(responseXML);
-            respond(request, response, 500, responseXML, 'text/xml', responseXML);
+            return respond(request, response, 500, responseXML, 'text/xml', responseXML);
         }
     }
     // handle json
     const responseJSON = JSON.stringify({ message, id });
-    console.log(responseJSON);
     respond(request, response, 500, responseJSON, 'application/json', responseJSON);
 }
 
@@ -153,13 +143,11 @@ const getNotImplemented = (request, response) => {
     if (request.acceptedTypes) {
         if (request.acceptedTypes[0] === 'text/xml') {
             const responseXML = `<response><message>${message}</message><id>${id}</id></response>`;
-            console.log(responseXML);
-            respond(request, response, 501, responseXML, 'text/xml', responseXML);
+            return respond(request, response, 501, responseXML, 'text/xml', responseXML);
         }
     }
     // handle json
     const responseJSON = JSON.stringify({ message, id });
-    console.log(responseJSON);
     respond(request, response, 501, responseJSON, 'application/json', responseJSON);
 }
 
@@ -170,13 +158,11 @@ const getPageDoesNotExist = (request, response) => {
     if (request.acceptedTypes) {
         if (request.acceptedTypes[0] === 'text/xml') {
             const responseXML = `<response><message>${message}</message><id>${id}</id></response>`;
-            console.log(responseXML);
-            respond(request, response, 404, responseXML, 'text/xml', responseXML);
+            return respond(request, response, 404, responseXML, 'text/xml', responseXML);
         }
     }
     // handle json
     const responseJSON = JSON.stringify({ message, id });
-    console.log(responseJSON);
     respond(request, response, 404, responseJSON, 'application/json', responseJSON);
 }
 
